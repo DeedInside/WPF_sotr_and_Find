@@ -11,29 +11,30 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using WpfApp1.Data;
 using WpfApp1.Model;
 
 namespace WpfApp1.View
 {
     /// <summary>
-    /// Логика взаимодействия для CreateUserWindow.xaml
+    /// Логика взаимодействия для EditUser.xaml
     /// </summary>
-    public partial class CreateUserWindow : Window
+    public partial class EditUser : Window
     {
-        public User NewUser;
-        public CreateUserWindow()
+        public User NewUser { get; set; }
+
+        public EditUser(User user)
         {
             InitializeComponent();
+            BoxEmail.Text = user.Email;
+            BoxName.Text = user.Name;
+            CheckIsValid.IsChecked = user.IsValid;
         }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             NewUser = new()
             {
                 Name = BoxName.Text,
                 Email = BoxEmail.Text,
-                Password = BoxPassword.Text,
                 IsValid = CheckIsValid.IsChecked.Value
             };
 

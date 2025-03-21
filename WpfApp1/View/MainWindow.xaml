@@ -7,9 +7,11 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <StackPanel>
-        <ListView Name="ListViewUsers">
-            
-        </ListView>
-        <Button Content="add new user" Click="Add_User__Click"/>
+        <ListView Name="ListViewUsers" ItemsSource="{Binding Users}"/>
+        <Button Content="add new user" Click="Add_User_Click"/>
+        <Button Content="Edit user" Click="Edit_user_Click"/>
+        <Button Content="Remove user" Click="Remove_User_Click"/>
+        <ListView Name="ListViewRole"/>
+        <Button Content="Выдать роль" Click="Add_Role_to_User_Click"/>
     </StackPanel>
 </Window>

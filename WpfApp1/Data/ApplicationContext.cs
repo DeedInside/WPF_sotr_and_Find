@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Windows;
-using System.Windows.Controls.Ribbon;
 using WpfApp1.Model;
 
 namespace WpfApp1.Data
@@ -8,18 +6,22 @@ namespace WpfApp1.Data
     public class ApplicationContext: DbContext
     {
         public DbSet<User> DataUsers { get; set; }
+        public DbSet<Role> DataRole { get; set; }
 
         public ApplicationContext()
         {
             if (Database.EnsureCreated() == true)
             {
                 DataUsers.Load();
+                DataRole.Load();
                 DataUsers.AddRange(_users);
+                DataRole.AddRange(_roles);
                 this.SaveChanges();
             }
             else
             {
                 DataUsers.Load();
+                DataRole.Load();
             }
         }
 
@@ -28,6 +30,17 @@ namespace WpfApp1.Data
             optionsBuilder.UseSqlite("Data Source=Users.db");
         }
 
+        private static List<Role> _roles = new List<Role>()
+        {
+            new Role()
+            {
+                Name = "admin",
+            },
+            new Role()
+            {
+                Name = "user",
+            }
+        };
         private static List<User> _users = new List<User>()
         {
             new()
