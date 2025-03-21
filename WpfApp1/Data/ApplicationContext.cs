@@ -1,14 +1,37 @@
-﻿using WpfApp1.Model;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Windows;
+using System.Windows.Controls.Ribbon;
+using WpfApp1.Model;
 
 namespace WpfApp1.Data
 {
-    public class ApplicationContext
+    public class ApplicationContext: DbContext
     {
+        public DbSet<User> DataUsers { get; set; }
+
+        public ApplicationContext()
+        {
+            if (Database.EnsureCreated() == true)
+            {
+                DataUsers.Load();
+                DataUsers.AddRange(_users);
+                this.SaveChanges();
+            }
+            else
+            {
+                DataUsers.Load();
+            }
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlite("Data Source=Users.db");
+        }
+
         private static List<User> _users = new List<User>()
         {
             new()
             {
-                Id = 2,
                 Name = "Test_2",
                 Email = "qwe_2@mail.ru",
                 Password = "password_2",
@@ -16,7 +39,6 @@ namespace WpfApp1.Data
             },
             new()
             {
-                Id = 1,
                 Name = "Test_1",
                 Email = "qwe_1@mail.ru",
                 Password = "password_1",
@@ -24,7 +46,6 @@ namespace WpfApp1.Data
             },
             new()
             {
-                Id = 4,
                 Name = "Test_4",
                 Email = "qwe_4@mail.ru",
                 Password = "password_4",
@@ -32,14 +53,11 @@ namespace WpfApp1.Data
             },
             new()
             {
-                Id = 3,
                 Name = "Test_3",
                 Email = "qwe_3@mail.ru",
                 Password = "password_3",
                 IsValid = false,
             },
         };
-    
-        public List<User> Users { set { _users = value; } get { return _users; } }
     }
 }

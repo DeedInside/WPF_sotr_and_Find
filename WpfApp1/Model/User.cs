@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace WpfApp1.Model
 {
+    /// <summary>
+    /// my user
+    /// </summary>
     public class User
     {
         public int Id { get; set; }
