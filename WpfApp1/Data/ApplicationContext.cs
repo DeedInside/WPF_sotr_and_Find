@@ -1,76 +1,80 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WpfApp1.Model;
 
 namespace WpfApp1.Data
 {
     public class ApplicationContext: DbContext
     {
-        public DbSet<User> DataUsers { get; set; }
-        public DbSet<Role> DataRole { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Item> Items { get; set; }
 
-        public ApplicationContext()
+        public ApplicationContext() 
         {
-            if (Database.EnsureCreated() == true)
+            if(Database.EnsureCreated() == true)
             {
-                DataUsers.Load();
-                DataRole.Load();
-                DataUsers.AddRange(_users);
-                DataRole.AddRange(_roles);
-                this.SaveChanges();
+                //создал
+                Users.AddRange(_users);
+                Items.AddRange(_items);
+                SaveChanges();
+                Users.Load();
+                Items.Load();
             }
             else
             {
-                DataUsers.Load();
-                DataRole.Load();
+                //она уже была
+                Users.Load();
+                Items.Load();
             }
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=Users.db");
+            optionsBuilder.UseSqlite("Data Source=Laba6.db");
         }
 
-        private static List<Role> _roles = new List<Role>()
+        private List<User> _users = new()
+       {
+           new User()
+           {
+               Id = 1,
+               Email = "qwe_1@mail.ru",
+               Name = "qwe_1",
+               Password = "123"
+           },
+           new User()
+           {
+               Id = 2,
+               Email = "qwe_2@mail.ru",
+               Name = "qwe_2",
+               Password = "123"
+           },new User()
+           {
+               Id = 3,
+               Email = "qwe_3@mail.ru",
+               Name = "qwe_3",
+               Password = "123"
+           }
+       };
+        private List<Item> _items = new()
         {
-            new Role()
+            new Item()
             {
-                Name = "admin",
+                Id = 1,
+                Description = "Description",
+                Discount = 10,
+                IsValid = true,
+                Name = "Item_1",
+                Price = 1200.70,
+                Size = 34,
             },
-            new Role()
+            new Item()
             {
-                Name = "user",
+                Id = 2,
+                Description = "Description",
+                IsValid = true,
+                Name = "Item_2",
+                Price = 4300.70,
+                Size = 12,
             }
-        };
-        private static List<User> _users = new List<User>()
-        {
-            new()
-            {
-                Name = "Test_2",
-                Email = "qwe_2@mail.ru",
-                Password = "password_2",
-                IsValid = false,
-            },
-            new()
-            {
-                Name = "Test_1",
-                Email = "qwe_1@mail.ru",
-                Password = "password_1",
-                IsValid = true,
-            },
-            new()
-            {
-                Name = "Test_4",
-                Email = "qwe_4@mail.ru",
-                Password = "password_4",
-                IsValid = true,
-            },
-            new()
-            {
-                Name = "Test_3",
-                Email = "qwe_3@mail.ru",
-                Password = "password_3",
-                IsValid = false,
-            },
         };
     }
 }
