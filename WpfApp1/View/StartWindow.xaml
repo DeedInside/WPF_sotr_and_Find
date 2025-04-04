@@ -14,11 +14,12 @@
                     <GridViewColumn Header="Price" DisplayMemberBinding="{Binding Price}"/>
                     <GridViewColumn Header="Valid" DisplayMemberBinding="{Binding IsValid}"/>
                     <GridViewColumn Header="Discount" DisplayMemberBinding="{Binding Discount}"/>
+                    <GridViewColumn Header="User" DisplayMemberBinding="{Binding Client.Name}"/>
                 </GridView>
             </ListView.View>
         </ListView>
         <Button Margin="5" Content="Добавить новый инвентарь" Click="Add_New_Item_Click"/>
-        <Button Margin="5" Content="Удалить выбранный инвентарь" Click="Remove_Item_Click"/>
+        <Button Name="buttonRemove" Margin="5" Content="Удалить выбранный инвентарь" Click="Remove_Item_Click"/>
         <Button Margin="5" Content="Привязать пользователя к инвентарю" Click="Binding_User_To_Item_Click"/>
 
     </StackPanel>

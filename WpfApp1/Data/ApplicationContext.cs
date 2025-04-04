@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SQLitePCL;
 
 namespace WpfApp1.Data
 {
     public class ApplicationContext: DbContext
     {
+        public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Item> Items { get; set; }
 
@@ -12,15 +14,18 @@ namespace WpfApp1.Data
             if(Database.EnsureCreated() == true)
             {
                 //создал
-                Users.AddRange(_users);
+                Roles.AddRange(_roles);
+                //Users.AddRange(_users);
                 Items.AddRange(_items);
                 SaveChanges();
+                Roles.Load();
                 Users.Load();
                 Items.Load();
             }
             else
             {
                 //она уже была
+                Roles.Load();
                 Users.Load();
                 Items.Load();
             }
@@ -31,6 +36,20 @@ namespace WpfApp1.Data
             optionsBuilder.UseSqlite("Data Source=Laba6.db");
         }
 
+        private List<Role> _roles = new()
+        {
+            new Role()
+            {
+                Id = 1,
+                Name = "admin",
+            },
+            new Role()
+            {
+                Id = 2,
+                Name = "user",
+            }
+        };
+
         private List<User> _users = new()
        {
            new User()
@@ -38,20 +57,48 @@ namespace WpfApp1.Data
                Id = 1,
                Email = "qwe_1@mail.ru",
                Name = "qwe_1",
-               Password = "123"
+               Password = "123",
+               Role = new Role()
+               {
+                    Id = 2,
+                    Name = "user",
+               }
            },
            new User()
            {
                Id = 2,
                Email = "qwe_2@mail.ru",
                Name = "qwe_2",
-               Password = "123"
-           },new User()
+               Password = "123",
+               Role = new Role()
+                {
+                    Id = 2,
+                    Name = "user",
+                }
+           },
+            new User()
            {
                Id = 3,
                Email = "qwe_3@mail.ru",
                Name = "qwe_3",
-               Password = "123"
+               Password = "123",
+               Role = new Role()
+                {
+                    Id = 2,
+                    Name = "user",
+                }
+           },
+            new User()
+           {
+               Id = 4,
+               Email = "123",
+               Name = "123",
+               Password = "123",
+               Role = new Role()
+                {
+                    Id = 1,
+                    Name = "admin",
+                }
            }
        };
         private List<Item> _items = new()

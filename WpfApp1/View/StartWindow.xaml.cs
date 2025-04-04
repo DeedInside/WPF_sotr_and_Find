@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows;
 using WpfApp1.Data;
+using WpfApp1.View.Auto;
 
 namespace WpfApp1.View
 {
@@ -11,7 +12,21 @@ namespace WpfApp1.View
         public Item SelectesViewItem { get; set; }
         public StartWindow()
         {
+            AutUser autUser = new AutUser();
+
+            autUser.ShowDialog();
+
+            if(autUser.DialogResult == false)
+            {
+                Close();
+            }
+
             InitializeComponent();
+
+            if(Cooke.User.Role.Name != "admin")
+            {
+                buttonRemove.IsEnabled = false;
+            }
 
             context = new ApplicationContext();
             DataContext = this;
@@ -36,7 +51,7 @@ namespace WpfApp1.View
         {
             if(SelectesViewItem != null)
             {
-                BindingUserToItem userToItem = new BindingUserToItem();
+                BindingUserToItem userToItem = new BindingUserToItem(context.Users.ToList());
 
                 userToItem.ShowDialog();
 
@@ -54,6 +69,11 @@ namespace WpfApp1.View
         }
         private void Remove_Item_Click(object sender, RoutedEventArgs e)
         {
+            if(Cooke.User.Role.Name != "admin")
+            {
+                MessageBox.Show("не достаточно прав доступа");
+                return;
+            }
             if(SelectesViewItem != null)
             {
                 context.Remove(SelectesViewItem);

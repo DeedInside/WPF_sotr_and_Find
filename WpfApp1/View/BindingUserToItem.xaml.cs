@@ -8,17 +8,16 @@ namespace WpfApp1.View
         private ApplicationContext context;
         public List<User> Users { get; set; }
         public User SelectUser { get; set; }
-        public BindingUserToItem()
+        public BindingUserToItem(List<User> users)
         {
             InitializeComponent();
             DataContext = this;
-            context = new ApplicationContext();
-            Users = context.Users.ToList();
+            Users = users;
         }
         private void Add_Click(object sender, RoutedEventArgs e)
         {
             if(SelectUser != null)
-            { 
+            {
                 DialogResult = true;
                 return;
             }
