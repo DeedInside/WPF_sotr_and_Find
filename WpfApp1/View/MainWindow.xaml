@@ -7,7 +7,16 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <StackPanel>
-        <ListView Name="ListViewUsers" ItemsSource="{Binding Users}"/>
+        <ListView Name="ListViewUsers" ItemsSource="{Binding Users}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Name User" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Email}"/>
+                    <GridViewColumn Header="Valid" DisplayMemberBinding="{Binding IsValid}"/>
+                    <GridViewColumn Header="Role" DisplayMemberBinding="{Binding Role.Name}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
         <Button Content="add new user" Click="Add_User_Click"/>
         <Button Content="Edit user" Click="Edit_user_Click"/>
         <Button Content="Remove user" Click="Remove_User_Click"/>

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.ObjectModel;
 using System.Windows;
 using WpfApp1.Data;
 using WpfApp1.Model;
@@ -9,7 +10,7 @@ namespace WpfApp1
     public partial class MainWindow : Window
     {
         private ApplicationContext _context;
-        
+        public ObservableCollection<User> Users { get; set; }
         public MainWindow()
         {
             InitializeComponent();
@@ -17,7 +18,7 @@ namespace WpfApp1
 
             _context = new ApplicationContext();
             //ListViewUsers.ItemsSource
-            ListViewUsers.ItemsSource = _context.DataUsers.Local.ToObservableCollection();
+            Users = _context.DataUsers.Local.ToObservableCollection();
             ListViewRole.ItemsSource = _context.DataRole.Local.ToObservableCollection();
         }
 
@@ -63,7 +64,7 @@ namespace WpfApp1
                 _context.Entry(selectedUser).State = EntityState.Modified;
                 //_context.Update(selectedUser);
                 _context.SaveChanges();
-                ListViewUsers.Items.Refresh();
+                //ListViewUsers.Items.Refresh();
             }
             else
             {
