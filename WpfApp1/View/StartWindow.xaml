@@ -7,7 +7,8 @@
         mc:Ignorable="d"
         Title="StartWindow" Height="450" Width="800">
     <StackPanel>
-        <ListView ItemsSource="{Binding Items}" SelectedItem="{Binding SelectesViewItem}">
+        <Button Margin="5" Content="Выйти" Click="Exit_User_Click"/>
+        <ListView Name="ViewItems" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectesViewItem}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
@@ -21,6 +22,7 @@
         <Button Margin="5" Content="Добавить новый инвентарь" Click="Add_New_Item_Click"/>
         <Button Name="buttonRemove" Margin="5" Content="Удалить выбранный инвентарь" Click="Remove_Item_Click"/>
         <Button Margin="5" Content="Привязать пользователя к инвентарю" Click="Binding_User_To_Item_Click"/>
+        <Button Name="ButtonAdmin" Margin="5" Content="Админ панель" Click="Admin_Panel_Click" Visibility="Collapsed"/>
 
     </StackPanel>
 </Window>

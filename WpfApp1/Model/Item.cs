@@ -1,4 +1,4 @@
-﻿namespace WpfApp1.Data
+﻿namespace WpfApp1.Model
 {
     public class Item
     {

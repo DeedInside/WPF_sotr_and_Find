@@ -14,9 +14,9 @@ namespace WpfApp1.View.Auto
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if(!string.IsNullOrEmpty(BoxName.Text) & !string.IsNullOrEmpty(BoxPass.Text))
+            if(!string.IsNullOrEmpty(BoxEmail.Text) & !string.IsNullOrEmpty(BoxPass.Text))
             {
-                var user = context.Users.FirstOrDefault(q => q.Email == BoxName.Text & q.Password == BoxPass.Text);
+                var user = context.Users.FirstOrDefault(q => q.Email == BoxEmail.Text & q.Password == BoxPass.Text);
                 if (user != null)
                 {
                     Cooke.User = user;
@@ -36,11 +36,19 @@ namespace WpfApp1.View.Auto
 
             regUser.ShowDialog();
 
-            if(regUser.DialogResult == true)
+            if (regUser.DialogResult == true)
             {
-                regUser.NewUser.Role = context.Roles.FirstOrDefault( q => q.Name == "user");
-                context.Users.Add(regUser.NewUser);
-                context.SaveChanges();
+                var userFind = context.Users.FirstOrDefault(q => q.Email == regUser.NewUser.Email);
+                if (userFind == null)
+                {
+                    regUser.NewUser.Role = context.Roles.FirstOrDefault(q => q.Name == "user");
+                    context.Users.Add(regUser.NewUser);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    MessageBox.Show("Пользователь с таким Email уже существует");
+                }
             }
         }
     }

@@ -1,6 +1,9 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Controls;
 using WpfApp1.Data;
+using WpfApp1.Model;
+using WpfApp1.View.Admin;
 using WpfApp1.View.Auto;
 
 namespace WpfApp1.View
@@ -12,6 +15,7 @@ namespace WpfApp1.View
         public Item SelectesViewItem { get; set; }
         public StartWindow()
         {
+            context = new ApplicationContext();
             AutUser autUser = new AutUser();
 
             autUser.ShowDialog();
@@ -19,16 +23,16 @@ namespace WpfApp1.View
             if(autUser.DialogResult == false)
             {
                 Close();
+                return;
             }
 
             InitializeComponent();
 
-            if(Cooke.User.Role.Name != "admin")
+            if(Cooke.User.Role.Name == "admin")
             {
-                buttonRemove.IsEnabled = false;
+                ButtonAdmin.Visibility = Visibility.Visible;
             }
 
-            context = new ApplicationContext();
             DataContext = this;
 
             Items = context.Items.Local.ToObservableCollection();
@@ -60,6 +64,7 @@ namespace WpfApp1.View
                     SelectesViewItem.Client = userToItem.SelectUser;
                     context.Items.Update(SelectesViewItem);
                     context.SaveChanges();
+                    ViewItems.Items.Refresh();
                 }
             }
             else
@@ -83,6 +88,21 @@ namespace WpfApp1.View
             {
                 MessageBox.Show("не выбран удаляемый объект");
             }
+        }
+        private void Admin_Panel_Click(object sender, RoutedEventArgs e)
+        {
+            WindowAdminPanel adminPanel = new WindowAdminPanel(context);
+
+            adminPanel.ShowDialog();
+
+            ViewItems.Items.Refresh();
+            
+        }
+        private void Exit_User_Click(object sender, RoutedEventArgs e)
+        {
+            StartWindow startWindow = new StartWindow();
+            startWindow.Show();
+            this.Close();
         }
     }
 }

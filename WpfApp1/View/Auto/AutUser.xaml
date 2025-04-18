@@ -8,8 +8,8 @@
         Title="AutUser" Height="180" Width="200">
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
         <StackPanel Margin="15" Orientation="Horizontal">
-            <TextBox Name="BoxName" MinWidth="120"/>
-            <Label Content="Логин"/>
+            <TextBox Name="BoxEmail" MinWidth="120"/>
+            <Label Content="Email"/>
         </StackPanel>
         <StackPanel Margin="15" Orientation="Horizontal">
             <TextBox Name="BoxPass" MinWidth="120"/>

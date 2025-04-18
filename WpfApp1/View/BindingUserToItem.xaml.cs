@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using WpfApp1.Data;
+using WpfApp1.Model;
 
 namespace WpfApp1.View
 {

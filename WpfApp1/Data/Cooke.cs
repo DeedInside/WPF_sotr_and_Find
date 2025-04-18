@@ -1,4 +1,6 @@
-﻿namespace WpfApp1.Data
+﻿using WpfApp1.Model;
+
+namespace WpfApp1.Data
 {
     public static class Cooke
     {

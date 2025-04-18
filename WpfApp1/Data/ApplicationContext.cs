@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SQLitePCL;
+using WpfApp1.Model;
 
 namespace WpfApp1.Data
 {
